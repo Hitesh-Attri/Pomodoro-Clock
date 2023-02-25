@@ -37,6 +37,8 @@
     width: 90%;
     margin-bottom:10%;
     border-radius: 1rem;
+    box-sizing: border-box;
+    box-shadow: 0.02rem 0.02rem 1rem 0.2rem rgb(67, 240, 240);
 }
 
 
@@ -52,6 +54,16 @@
     margin:0.5rem;
     border-radius: 0.5rem;
 }
+
+#session-time{
+    box-sizing: border-box;
+    box-shadow: 0.02rem 0.02rem 1rem 0.2rem rgb(67, 240, 240);
+}
+#break-time{
+    box-sizing: border-box;
+    box-shadow: 0.02rem 0.02rem 1rem 0.2rem rgb(220, 124, 21);
+}
+
 
 #pmbtns-div{
     display: flex;

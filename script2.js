@@ -13,25 +13,23 @@ let resetBtn = document.getElementById('reset-btn');
 let showHerePtag = document.getElementById('show-here');
 let h1Tag = document.getElementById('session-cnt');
 
-let displayDiv = document.getElementById('display-div');
-
 let isRunning = false;
-let flag = false;
-let breakFlag = true;
-let x = 20;
-let y = 5;
+let sMin = 2;
+let sSec = 0;
 
-let minutes = 20;
+let bMin = 2;
+let bSec = 0;
+
+let minutes = 2;
 let seconds = 60;
 let milSec = 0;
 let sessionCnt = 1;
 
-let hStr ="";
 let mStr="";
 let sStr="";
 let milSecStr="";
 let id;
- 
+
 sessionTimeMinusBtn.addEventListener('click',function(){
     console.log("sessionTimeMinusBtn clicked");
 
@@ -50,7 +48,6 @@ sessionTimeMinusBtn.addEventListener('click',function(){
 
     str = x<10 ? `0${x} : 00`: `${x} : 00`;
     showHerePtag.innerText = str;
-
 });
 
 sessionTimePlusBtn.addEventListener('click',function(){
@@ -108,10 +105,6 @@ breakTimePlusBtn.addEventListener('click',function(){
 startStopBtn.addEventListener('click',function(){
     console.log("startPauseBtn clicked");
 
-    if(x == 0 || y == 0){
-        alert("session and break period can't be null!");
-    }else{
-
     if(!isRunning){
 
         console.log(minutes);
@@ -131,7 +124,6 @@ startStopBtn.addEventListener('click',function(){
         isRunning = false;
         startStopBtn.innerText = "Start";
     }
-}
 });
 
 resetBtn.addEventListener('click',function(){
@@ -147,14 +139,13 @@ resetBtn.addEventListener('click',function(){
     breakTimeMinusBtn.disabled = false;
     breakTimePlusBtn.disabled = false;
 
-    x = 20;
+    x = 2;
     y = 5;
     seconds = 59;
-    minutes= 20;
+    minutes= 2;
         
     let str = `${x} min`;
     sessionTimeP.innerText = str;
-
     str = x<10 ? `0${x} : 00`: `${x} : 00`;
     showHerePtag.innerText = str;
 
@@ -163,77 +154,122 @@ resetBtn.addEventListener('click',function(){
 });
 let once = false;
 
-function timer(tPeriod){
-    // console.log("being called");
-    if(minutes == x && x!=0){
-        minutes--;
-    }
-    if(!once){
-        minutes = tPeriod;
-        once = true;
-    }
-    // console.log("here",minutes,seconds);
+// function timer2(tPeriod){
+//     // console.log("being called");
+//     // if(minutes == x && x!=0){
+//     //     minutes--;
+//     // }
+//     // if(!once){
+//     //     minutes = tPeriod;
+//     //     once = true;
+//     // }
+//     // console.log("here",minutes,seconds);
 
-    // hours = parseInt(hours);
-    minutes = parseInt(minutes);
-    // minutes = x
-    seconds = parseInt(seconds);
-    milSec = parseInt(milSec);
+//     // hours = parseInt(hours);
+//     minutes = parseInt(minutes);
+//     // minutes = x
+//     seconds = parseInt(seconds);
+//     milSec = parseInt(milSec);
 
+
+
+//     if(milSec == 0){
+//         milSec = 99;
+//         seconds = seconds - 1;
+//         console.log("milSec == 0");
+//     }
+//     if(seconds==0){
+//         seconds = 59;
+//         minutes = minutes - 1;
+//         console.log("seconds == 0");
+//     }
+//     if(minutes == 0 && seconds ==0){
+//         // minutes = x;
+//         once = false;
+//         sessionCnt++;
+//         seconds = 59;
+//         clearInterval(id);
+//         id = setInterval(timer,1,y);
+//         // console.log(sessionCnt,"if m==0");
+
+//         h1Tag.innerText = `Session ${sessionCnt}`;
+//     }
     
+//     // console.log(sessionCnt);
+//     milSec = milSec -1;
+
+//     if(minutes<10) mStr = "0"+minutes;
+//     else mStr = "" + minutes;
+
+//     if(seconds<10) sStr = "0"+seconds;
+//     else sStr = "" + seconds;
+
+//     if(milSec<10) milSecStr = "0"+milSec;
+//     else milSecStr = "" + milSec;
+
+//     let str = mStr + " : " + sStr;
+//     showHerePtag.innerText = str;
+//     // id = setInterval(timer,10);
+// }
+
+function timer(){
+
     if(milSec == 0){
         milSec = 99;
-        seconds = seconds - 1;
+        sSec = sSec - 1;
         console.log("milSec == 0");
     }
-    if(minutes ==0 && seconds == 0){
-        flag = true;
+
+    if(sMin != 0){
+        sSec--;
+    } else if(sMin != 0 && sSec == 0){
+        sSec = 59;
+        sMin--;
     }
-    if(seconds==0){
-        seconds = 59;
-        minutes = minutes - 1;
-        console.log("seconds == 0");
-    }
 
-    if(flag){
-        // minutes = x;
-        once = false;
-        flag = false;
-        
-        seconds = 59;
-        clearInterval(id);
-        
-        if(breakFlag){
-            minutes = y;
-            breakFlag = false;
-
-            displayDiv.style.boxShadow = `0.02rem 0.02rem 1rem 0.2rem rgb(220, 124, 21)`;
-        }else{
-            minutes = x;
-            breakFlag = true;
-            sessionCnt++;
-            h1Tag.innerText = `Session ${sessionCnt}`;
-
-            displayDiv.style.boxShadow = `0.02rem 0.02rem 1rem 0.2rem rgb(67, 240, 240)`;
+    if(sMin == 0 && sSec == 0){
+        if(bSec != 0){
+            bSec--;
+        } else if(bMin != 0 && bSec == 0){
+            bSec = 59;
+            bMin--;
         }
-        id = setInterval(timer,10,minutes);
-        // console.log(sessionCnt,"if m==0");
-        
     }
-    
-    // console.log(sessionCnt);
-    milSec = milSec -1;
 
-    if(minutes<10) mStr = "0"+minutes;
-    else mStr = "" + minutes;
+    if(sMin == 0 && sSec == 0 && bMin == 0 && bSec== 0){
+        sMin = 20;
+        sSec = 0;
 
-    if(seconds<10) sStr = "0"+seconds;
-    else sStr = "" + seconds;
+        bMin = 5;
+        bSec = 0;
 
-    if(milSec<10) milSecStr = "0"+milSec;
-    else milSecStr = "" + milSec;
+        sessionCnt++;
+        h1Tag.innerText = `Session ${sessionCnt}`;
 
+        // document.getElementById('counter').innerText++;
+    }
+    milSec--;
+
+    if(sMin == 0 && sSec == 0){
+        if(bMin<10) mStr = "0"+bMin;
+        else mStr = "" + bMin;
+
+        if(bSec<10) sStr = "0"+ bSec;
+        else sStr = "" + bSec;
+
+        // let str = mStr + " : " + sStr;
+        // showHerePtag.innerText = str;
+    }else{
+        if(sMin<10) mStr = "0"+sMin;
+        else mStr = "" + sMin;
+
+        if(sSec<10) sStr = "0"+ sSec;
+        else sStr = "" + sSec;
+
+        // let str = mStr + " : " + sStr;
+        // showHerePtag.innerText = str;
+    }
     let str = mStr + " : " + sStr;
     showHerePtag.innerText = str;
-    // id = setInterval(timer,10);
 }
+
